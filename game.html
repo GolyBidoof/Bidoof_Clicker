@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<head>
+	<link rel='stylesheet' href='game.css'/>
+	<script src='game.js'></script>
+</head>
+<body>
+<div id="mainthings">
+Bidoof Eggs: <span id="bidoofs">0</span><br /></div>
+<div id="subthings">
+Eggs per second: <span id="eggsPerSecond">0</span><br />
+Bidoof love meter: <span id="love">100</span><br />
+<span id="isLoved"></span><br />
+<span id="thingsThatHappen">Loading...</span>
+</div>
+
+<img id="clickingEggs" src="onClick.gif" onclick="bidoofClick(event)"/>
+
+<div class="menus">
+<button class="abc" id="bidoof" type="reset" onclick="bidoofClick(event)"></button><p></p>
+
+<button class="abc" id="savegame" type="reset" onclick="saveGame()">Save teh gaem! Last autosaved: <span id="savetiem">0</span> seconds ago!</button>
+
+<button class="abc" id="settings" type="reset" onclick="toggleEggs()">Egg factory</button><button class="abc" id="settings" type="reset" onclick="toggleUpgrades()">Upgrades</button><button class="abc" id="settings" type="reset" onclick="toggleStats()">Stats</button><button class="abc" id="settings" type="reset" onclick="toggleAchives()">Achievements</button><br />
+</div>
+
+<div id="upgrade">
+</div>
+<div id="powerup" class="powerup">
+</div>
+
+<div id="statistics" class="statistics">
+<div id="statsbg" class="statsbg">
+<div id="statstext" class="statstext">
+<li>You've clicked <span id="clicks">0</span> times!<br/>
+<li>You've made <span id="totaleggs">0</span> eggs in total!<br/>
+<li>You've played for <span id="gametime">0</span> seconds!<br/>
+<li>You've bought <span id="upgradeCount">0</span> upgrades!<br/>
+<li>You've made <span id="totalBuildings">0</span> Egg Factories!<br/>
+<li>You've had <span id="eventCount">0</span> events!<br/>
+<li>Your click gives <span id="clicksAmountes">1</span> eggs!
+<li>You unlocked <span id="achives">0</span> achievements!
+</div></div></div>
+
+<div id="achievements" class="achievements">
+<div id="achievementsbg" class="achievementsbg">
+</div>
+</div>
+
+<div id="popupwindow">hello?</div>
+
+</body>
+</html>
