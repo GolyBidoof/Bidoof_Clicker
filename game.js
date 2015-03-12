@@ -1,4 +1,4 @@
-﻿var eggs = 0;
+var eggs = 0;
 var breedsClicks = 0;
 var eggsPerSecond = 0;
 var clicks = 1;
@@ -20,6 +20,9 @@ var baseClicks = 1;
 var isPopupOn = 0;
 var achievementsUnlocked = 0;
 var popup = document.getElementById("popupwindow");
+var timer = new Date().getTime();
+var oldTimer = new Date().getTime();
+var delay;
 //BigClick
 function updateEPS() {
 	eggsPerSecond=0;	
@@ -433,9 +436,12 @@ var bidoofAppearsTimer=0;
 var popupTimer=0;
 //refresher
 var timer = setTimeout(function() {
-   	seconds++;
-	timer = setTimeout(arguments.callee, 100)
-	eggs= (Math.round((eggs+(eggsPerSecond/10))*100)/100);
+	timer = new Date().getTime();
+	delay = Math.round((timer - oldTimer)/100);
+	oldTimer=timer;
+   	seconds+=delay;
+	timer = setTimeout(arguments.callee, 100);
+	eggs=Math.round((eggs+(eggsPerSecond/10)*delay)*100)/100;
 	
 	//console.log(randomTime + " " + timeranotherone);
 	if (loaded==1 && displayed==0) {
@@ -443,66 +449,61 @@ var timer = setTimeout(function() {
 		displayed=1;
 	}
 
-	if (timercount==50) {
+	if (timercount>=50) {
 		document.getElementById('isLoved').innerHTML = "";
 	}
 
-	if (timeranotherone==randomTime && (love*eventsChance/100)>=randomTime) {
+	if (timeranotherone>=randomTime && (love*eventsChance/100)>=randomTime) {
 		event();
 		randomTime = Math.round(Math.random()*eventsChance);
 		timeranotherone=0;
-	} else if (timeranotherone==randomTime && ((love*eventsChance)/100)<randomTime) {
+	} else if (timeranotherone>=randomTime && ((love*eventsChance)/100)<randomTime) {
 		unluckyEvent();
 		randomTime = Math.round(Math.random()*eventsChance);
 		timeranotherone=0;
 	} else {
-		timeranotherone++;
-		timercount++;
+		timeranotherone+=delay;
+		timercount+=delay;
 		document.getElementById("savetiem").innerHTML = Math.round(timercount/10);
 	}
 
-    	if (timercount==600) {
+    	if (timercount>=600) {
 		saveGame();
 	}
-	if (boosteffect==1) {
-		boostTimer++;
+	if (boosteffect>=1) {
+		boostTimer+=delay;
 	}
-	if (boostTimer==300) {
+	if (boostTimer>=300) {
 		boostTimer=0;
 		boosteffect=0;
 		buff=1;
 	}
 	if (bidoofAppears==1) {
 		bidoofAppearsTimer++;
-		var bidoofAppearsOpacity = 0.4-(4*bidoofAppearsTimer/100);
+		var bidoofAppearsOpacity = 0.4-(4*bidoofAppearsTimer/100)*delay;
 		document.getElementById("clickingEggs").style.opacity = bidoofAppearsOpacity;
 	}
-	if (bidoofAppearsTimer==10) {
+	if (bidoofAppearsTimer>=10) {
 		bidoofAppears=0;
 		bidoofAppearsTimer=0;
 		document.getElementById("clickingEggs").style.opacity = 0;
 	}
 	if (isPopupOn==1) {
-		popupTimer++;
+		popupTimer+=delay;
 		document.getElementById("popupwindow").style.opacity = 1.0-(0.05*popupTimer);
 	}
-	if (popupTimer==20) {
+	if (popupTimer>=20) {
 		isPopupOn=0;
 		popupTimer=0;
 		document.getElementById("popupwindow").style.opacity = 0;
 	}
 	
-    	totalEggs = Math.round((totalEggs+eggsPerSecond/10)*100)/100;
-    	love = Math.round((love-lovedrop)*1000)/1000;
+    	totalEggs = Math.round((totalEggs+eggsPerSecond/10*delay)*100)/100;
+    	love = Math.round((love-lovedrop*delay)*1000)/1000;
 	if (loaded==1) {
 		updateEggs();
 	}
 	
 	//console.log(buff);
-}, 200);
-
-
-/*setTimeout(function () { 
-    eggs+=eggsPerSecond;
-    document.getElementById('bidoofs').innerHTML = eggs;
-}, tiem); //once per second use the auto clickers*/
+	document.title=eggs;
+}, 100);
