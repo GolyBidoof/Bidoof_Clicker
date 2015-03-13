@@ -117,13 +117,13 @@ function getCookie() {
 
 		eggs=parseInt(arrayofvalues[0]);
 		love=arrayofvalues[1];
-		seconds=arrayofvalues[2];
+		seconds=parseInt(arrayofvalues[2]);
 		breedsClicks=arrayofvalues[3];
 		totalEggs=parseInt(arrayofvalues[4]);
-		eventCount=arrayofvalues[5];
-		buff=arrayofvalues[6];
-		boosteffect=arrayofvalues[7];
-		boostTimer=arrayofvalues[8];
+		eventCount=parseInt(arrayofvalues[5]);
+		buff=parseInt(arrayofvalues[6]);
+		boosteffect=parseInt(arrayofvalues[7]);
+		boostTimer=parseInt(arrayofvalues[8]);
 
 		for (i=0; i<totalBuildings; i++) {
 			buildingsPrice[i] = parseInt(arrayofvalues[9+i*2]);
