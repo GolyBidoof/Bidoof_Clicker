@@ -1,3 +1,4 @@
+
 body {
     text-align: center;
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
@@ -210,6 +211,8 @@ div.statstext {
 .achievements {
     display: none;
     font-size: 22px;
+    width: 500px;
+    line-height: 0px;
 }
 div.achievementsbg {
     width: 100%;
