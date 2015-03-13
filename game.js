@@ -243,14 +243,14 @@ function toggleAchives () {
     	document.getElementById("powerup").style.display = 'none';
     	document.getElementById("statistics").style.display = 'none';
     	document.getElementById("upgrade").style.display = 'none';
-    	document.getElementById("achievements").style.display = 'inline';
+    	document.getElementById("achievements").style.display = 'inline-block';
 	refreshAchives();
 }
 function refreshAchives () {
 	var loadAllAchievements="";
 	for (i=0; i<totalAchievements; i++) {
 		if (eggchivmentsUnlocked[i]==0) {
-			loadAllAchievements+='<button name="achievement" class="abc" id="achievement" type="reset" disabled><div class="achievementdetails"><span id="subthings">' + eggchivmentsNames[i] + '</span><br/>' + eggchivmentsSubNames[i] + '</div><div id="achievementamount"><img style="width:80px; height:80px"class="achievementamount" id="achievement' + i +'" src="Bidoof100pxblack.png" align="right"></div></button></br>'
+			loadAllAchievements+='<button name="achievement" class="abc" id="achievement" type="reset" disabled><div class="achievementdetails"><span id="subthings">' + eggchivmentsNames[i] + '</span></br>' + eggchivmentsSubNames[i] + '</div><div id="achievementamount"><img style="width:80px; height:80px"class="achievementamount" id="achievement' + i +'" src="Bidoof100pxblack.png" align="right"></div></button></br>'
 		} else {
 			loadAllAchievements+='<button name="achievement" class="abc" id="achievement" type="reset" disabled><div class="achievementdetails"><span id="subthings">' + eggchivmentsNames[i] + '</span><br/>' + eggchivmentsTitles[i] + '</div><div id="achievementamount"><img style="width:80px; height:80px"class="achievementamount" id="achievement' + i +'" src="Bidoof100px.png" align="right"></div></button></br>'
 		}
@@ -341,7 +341,7 @@ var buildingsTotal = 0;
 var buildingsHTML = ["Mama Bidoof","Wannabe Shiny Painted Bidoof","Zombidoof","KopatschBidoof","Nuke Bidoof","The Bidoof Thinker","Russian Brute Bidoofs","BrodeckiBidoof"];
 var buildingsDesc = ["Apparently only makes 0.1 eggs per second.",
 "Gives ya 0.6 eggs per second. It isn't really shiny. It's painted.",
-"'Converts' 3 brains into eggs per second ( ͡° ͜ʖ ͡°)",
+"'Converts' 3 brains into eggs per second ( ÍˇÂ° ÍśĘ– ÍˇÂ°)",
 "A group of explorers digging out 11 eggs per second.",
 "30-Bidoof big terroristic organisation trapping 45 people in eggs per second.",
 "Evolution line with minibrains in their teeth allowing to make 242 eggs per second.",
