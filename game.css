@@ -35,13 +35,61 @@ div {
     pointer-events: none;
 }
 #savegame {
-    max-width: 500px;
+    max-width: 185px;
     width: 100%;
-    display: block;
+    display: inline-block;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
+    font-size: 10px;
+    bottom: 10px;
+    position: fixed;
+    left: 10px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.2);
 }
-
+progress {
+	background-color: #966E41;
+	border: 0;
+	width: 300px;
+	height: 8px;
+	border-radius: 9px;
+}
+progress::-webkit-progress-bar {
+	background-color: #966E41;
+	border-radius: 9px;
+}
+progress::-webkit-progress-value {
+	background: #966E41;
+	background: -moz-linear-gradient(top,  #CDAD81 0%, #C36EBC 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#CDAD81), color-stop(100%,#C36EBC));
+	background: -webkit-linear-gradient(top,  #CDAD81 0%,#C36EBC 100%);
+	background: -o-linear-gradient(top,  #CDAD81 0%,#C36EBC 100%);
+	background: -ms-linear-gradient(top,  #CDAD81 0%,#C36EBC 100%);
+	background: linear-gradient(to bottom,  #CDAD81 0%,#C36EBC 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8e', endColorstr='#a5c956',GradientType=0 );
+	border-radius: 9px;
+}
+progress::-moz-progress-bar {
+	background: #966E41;
+	background: -moz-linear-gradient(top,  #CDAD81 0%, #C36EBC 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#CDAD81), color-stop(100%,#C36EBC));
+	background: -webkit-linear-gradient(top,  #cdeb8e 0%,#C36EBC 100%);
+	background: -o-linear-gradient(top,  #CDAD81 0%,#C36EBC 100%);
+	background: -ms-linear-gradient(top,  #CDAD81 0%,#C36EBC100%);
+	background: linear-gradient(to bottom,  #CDAD81 0%,#C36EBC 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8e', endColorstr='#a5c956',GradientType=0 );
+	border-radius: 9px;
+}
+.progress-value {
+	padding: 0px 5px;
+	line-height: 20px;
+	margin-left: 5px;
+	font-size: .8em;
+	color: #966E41;
+	height: 18px;
+	float: right;
+}
 .menus {
     line-height: 0px;
 }
@@ -188,7 +236,8 @@ br.powerup {
 
 #settings {
     width: 50%;
-    max-width: 125px;
+    max-width: 83.3px;
+    font-size: 10px;
 }
 div.statistics {
     display: none;
