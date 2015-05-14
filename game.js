@@ -48,7 +48,7 @@ function updateEggs(){
 	niceTexts();
 	achievementChecker();
 	
-	document.getElementById("love").innerHTML = parseFloat(Math.round(love*100)/100).toFixed(1);
+	document.getElementById("love").innerHTML = '</br><progress value="'+parseFloat(Math.round(love*100)/100).toFixed(1)+'" max="100"></progress>'
 	document.getElementById("totaleggs").innerHTML = parseFloat(Math.round(totalEggs*10)/10).toFixed(1);
    	document.getElementById("gametime").innerHTML = parseFloat(Math.round(seconds/10)).toFixed(0);
 	document.getElementById("totalBuildings").innerHTML = buildingsTotal;
@@ -341,7 +341,7 @@ var buildingsTotal = 0;
 var buildingsHTML = ["Mama Bidoof","Wannabe Shiny Painted Bidoof","Zombidoof","KopatschBidoof","Nuke Bidoof","The Bidoof Thinker","Russian Brute Bidoofs","BrodeckiBidoof"];
 var buildingsDesc = ["Apparently only makes 0.1 eggs per second.",
 "Gives ya 0.6 eggs per second. It isn't really shiny. It's painted.",
-"'Converts' 3 brains into eggs per second ( ÍˇÂ° ÍśĘ– ÍˇÂ°)",
+"'Converts' 3 brains into eggs per second ( ĂŤË‡Ă‚Â° ĂŤĹ›Äâ€“ ĂŤË‡Ă‚Â°)",
 "A group of explorers digging out 11 eggs per second.",
 "30-Bidoof big terroristic organisation trapping 45 people in eggs per second.",
 "Evolution line with minibrains in their teeth allowing to make 242 eggs per second.",
