@@ -37,6 +37,10 @@ function updateEPS() {
 	clicks = baseClicks + eggsPerSecond*clickBoost;
 	document.getElementById("clicksAmountes").innerHTML = parseFloat(Math.round(clicks*100)/100).toFixed(2);
 	document.getElementById("upgradeCount").innerHTML = upgradeCount;
+	currentExpGain=0;
+	for (i=0; i<totalDojos; i++) {
+		currentExpGain+=dojoAmount[i]*dojoGain[i];
+	}
 }
 
 function updateEggs(){
@@ -48,7 +52,7 @@ function updateEggs(){
 	niceTexts();
 	achievementChecker();
 	
-	document.getElementById("love").innerHTML = '<progress value="'+parseFloat(Math.round(love*100)/100).toFixed(1)+'" max="100"></progress><p>Love Meter</p>'
+	document.getElementById("love").innerHTML = '<progress value="'+parseFloat(Math.round(love*100)/100).toFixed(1)+'" max="100" id="lovebar"></progress><p>Love Meter</p>'
 	document.getElementById("totaleggs").innerHTML = parseFloat(Math.round(totalEggs*10)/10).toFixed(1);
    	document.getElementById("gametime").innerHTML = parseFloat(Math.round(seconds/10)).toFixed(0);
 	document.getElementById("totalBuildings").innerHTML = buildingsTotal;
@@ -59,6 +63,7 @@ function updateEggs(){
         level++;
         printPopup("Level up! Lv." + level);
     }
+	updateExp();
 
 }
 
@@ -94,6 +99,10 @@ function saveGame(){
 	for (k=0; k<totalAchievements; k++) {
 		saveString += eggchivmentsUnlocked[k] + "|";
 	}
+	for (i=0; i<totalDojos; i++) {
+		saveString += dojoAmount[i] + "|";
+	}
+	saveString += exppoints + "|";
 	console.log(saveString);
 	addCookie("savefile", saveString, 365);
 	document.getElementById('isLoved').innerHTML = "Game Saved!";
@@ -148,6 +157,17 @@ function getCookie() {
 		for (var l=0; l<totalAchievements; l++) {
 			eggchivmentsUnlocked[l]=arrayofvalues[9+totalBuildings*2+totalUpgrades+l];
 		}
+		if (arrayofvalues.length>(9 + totalBuildings * 2 + totalUpgrades + totalAchievements)) {
+		for (i=0; i<totalDojos; i++) {
+			dojoAmount[i] = parseInt(arrayofvalues[9 + totalBuildings * 2 + totalUpgrades + totalAchievements + i]);
+			var tempDojos=dojoAmount[i];
+			for (j=tempDojos; j>0; j--) {
+				dojoPrice[i]=Math.floor(dojoPrice[i]*1.3);
+			}
+
+		}
+		exppoints=parseInt(arrayofvalues[9+totalBuildings*2+totalUpgrades+totalAchievements+totalDojos]);
+		}
 	}
 	printPopup("Welcome to Bidoof Clicker, 2013-2015 Szymbar15");
 	loaded=1;
@@ -195,10 +215,21 @@ function bidoofClick(e){
 	document.getElementById("clickingEggs").style.left=xcoord+5+"px";
 	document.getElementById("clickingEggs").visibility = "visible";
 	document.getElementById("clickingEggs").style.opacity = "0.4";
-    exppoints++;
+	exppoints++;
     console.log(exppoints);
     updateEggs();
-    document.getElementById("exp").innerHTML = '<progress value="' + (exppoints+1-Math.pow(level, 3)).toString() + '" max="' + (Math.pow(level+1, 3)-Math.pow(level, 3)).toString() + '"></progress>';
+    updateExp();
+}
+
+function updateExp() {
+	var expstring = '<progress value="';
+	if (level == 1) {
+		expstring += (exppoints + 1 - Math.pow(level, 3)).toString() + '" max="' + (Math.pow(level + 1, 3)).toString() + '"></progress><p>Exp Points: ' + (Math.round(exppoints)).toString() + '/' + (Math.pow(level + 1, 3)).toString() + '; Lv.' + level.toString() + '</p>';
+
+	} else {
+		expstring += (exppoints - Math.pow(level, 3)).toString() + '" max="' + (Math.pow(level + 1, 3) - Math.pow(level, 3)).toString() + '"></progress><p>Exp Points: ' + (Math.round(exppoints - Math.pow(level, 3))).toString() + '/' + (Math.pow(level + 1, 3) - Math.pow(level, 3)).toString() + '; Lv.' + level.toString() + '</p>';
+	}
+	document.getElementById("exp").innerHTML = expstring;
 }
 
 
@@ -273,6 +304,10 @@ function toggleDojo () {
 		loadDojo+='<button name="upgrade" class="abc" id="upgrade" type="reset" onclick="buyDojos(' + i + ')"><div id="' + dojoHTML[i] + '" class="buildingamount">0</div><div id="buildingdetails"><span id="subthings">'+ dojoNames[i] + '</span><br />' + dojoDesc[i] + '<br/>Cost: <span id="' + dojoHTML[i] + 'Price' + '">' + dojoPrice[i] + '</span></div><span id="dojotext" class="dojotext">Giving you a whooping '+ dojoGain[i] + 'XP/s</span></button><br />';
 	}
 	document.getElementById("dojo").innerHTML = loadDojo;
+	for (i=0; i<totalDojos; i++) {
+		document.getElementById(dojoHTML[i]).innerHTML = dojoAmount[i];
+		document.getElementById(dojoHTML[i] + "Price").innerHTML = dojoPrice[i];
+	}
 }
 function toggleBattles() {
 	document.getElementById("powerup").style.display = 'none';
@@ -414,10 +449,11 @@ function debug() {
 var totalDojos = 1;
 var dojoPrice = [20];
 var dojoAmount = [0];
-var dojoGain = [1];
+var dojoGain = [0.1];
 var dojoNames = ["Punching bag"];
 var dojoDesc = ["No, Bidoofs don't punch this one. They chew it instead."];
 var dojoHTML = ["pbag"];
+var currentExpGain = 0;
 function buyDojos(order) {
 	if(eggs >= dojoPrice[order]) {
 		dojoAmount[order] += 1;
@@ -426,15 +462,13 @@ function buyDojos(order) {
 
 		document.getElementById(dojoHTML[order]).innerHTML = dojoAmount[order];
 		document.getElementById(dojoHTML[order]+"Price").innerHTML = dojoPrice[order];
-
 		updateEggs();
 		updateEPS();
 		console.log(dojoAmount);
+
 	}
 
 }
-
-
 
 
 //Achievements
@@ -502,6 +536,7 @@ var timer = setTimeout(function() {
    	seconds+=delay;
 	timer = setTimeout(arguments.callee, 100);
 	eggs=Math.round((eggs+(eggsPerSecond/10)*delay)*100)/100;
+	exppoints=Math.round((exppoints+currentExpGain/10)*100)/100;
 	
 	//console.log(randomTime + " " + timeranotherone);
 	if (loaded==1 && displayed==0) {
