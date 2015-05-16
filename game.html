@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <meta charset="UTF-8">
 <html>
 <head>
@@ -9,17 +9,17 @@
 <div id="mainthings">
 Bidoof Eggs: <span id="bidoofs">0</span><br /></div>
 <div id="subthings">
-Eggs per second: <span id="eggsPerSecond">0</span><br />
-Bidoof love meter: <span id="love"></br><progress value="22" max="100"></progress></span><br />
-<span id="isLoved"></span><br />
-
+Eggs per second: <span id="eggsPerSecond">0</span></br>
+<span class="loveposition"><span class="lovelove"><span id="love"><progress value="22" max="100"></progress></span></span></span><br />
+<span class="expposition"><span class="expexp"><span id="exp"><progress value="22" max="100"></progress></span></span></span>
+<br /><span id="isLoved"></span><br />
+    <button class="abc" id="bidoof" type="reset" onclick="bidoofClick(event)"></button><p></p>
+<img id="clickingEggs" src="onClick.gif" onclick="bidoofClick(event)"/>
 <span id="thingsThatHappen">Loading...</span>
 </div>
 
-<img id="clickingEggs" src="onClick.gif" onclick="bidoofClick(event)"/>
-
 <div class="menus">
-<button class="abc" id="bidoof" type="reset" onclick="bidoofClick(event)"></button><p></p>
+
 <button class="abc" id="settings" type="reset" onclick="toggleEggs()">Egg factory</button><button class="abc" id="settings" type="reset" onclick="toggleUpgrades()">Upgrades</button><button class="abc" id="settings" type="reset" onclick="toggleStats()">Stats</button><button class="abc" id="settings" type="reset" onclick="toggleAchives()">Achievements</button><button class="abc" id="settings" type="reset" onclick="toggleDojo()">Dojo</button><button class="abc" id="settings" type="reset" onclick="toggleBattles()">Battles</button><br />
 
 
@@ -48,6 +48,8 @@ Bidoof love meter: <span id="love"></br><progress value="22" max="100"></progres
 </div>
 </div>
 
+<div id="dojo"></div>
+<div id="battles"></div>
 <button class="abc" id="savegame" type="reset" onclick="saveGame()"><div id="subthings">Save teh gaem!</div>
 Last autosaved: <span id="savetiem">0</span> seconds ago!</button>
 

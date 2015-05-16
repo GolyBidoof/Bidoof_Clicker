@@ -2,27 +2,27 @@ var eggs = 0;
 var breedsClicks = 0;
 var eggsPerSecond = 0;
 var clicks = 1;
-var tiem = 1;
 var totalEggs = 0;
 var love = 100;
-var lovedrop = 0.01;
+var loveDrop = 0.01;
 var upgradeCount = 0;
-var faithfulEncounter = 0;
-var savestring = "null";
+var saveString = "null";
 var loaded = 0;
 var eventCount = 0;
 var eventsChance = 5000;
 var totalBuildings = 8;
 var totalUpgrades = 6;
-var epsmodifier = 1;
+var EPSModifier = 1;
 var clickBoost = 0;
 var baseClicks = 1;
 var isPopupOn = 0;
 var achievementsUnlocked = 0;
-var popup = document.getElementById("popupwindow");
 var timer = new Date().getTime();
 var oldTimer = new Date().getTime();
 var delay;
+var exppoints = 0;
+var level=1;
+
 //BigClick
 function updateEPS() {
 	eggsPerSecond=0;	
@@ -31,7 +31,7 @@ function updateEPS() {
 		document.getElementById(buildingsNames[i]).innerHTML = buildingsAmount[i];
 		document.getElementById(buildingsCostNames[i]).innerHTML = buildingsPrice[i];
 	}
-	eggsPerSecond*=epsmodifier * buff;
+	eggsPerSecond*=EPSModifier * buff;
 	document.getElementById('eggsPerSecond').innerHTML = parseFloat(Math.round(eggsPerSecond*100)/100).toFixed(2);
 	achievementsAmount();
 	clicks = baseClicks + eggsPerSecond*clickBoost;
@@ -48,12 +48,17 @@ function updateEggs(){
 	niceTexts();
 	achievementChecker();
 	
-	document.getElementById("love").innerHTML = '</br><progress value="'+parseFloat(Math.round(love*100)/100).toFixed(1)+'" max="100"></progress>'
+	document.getElementById("love").innerHTML = '<progress value="'+parseFloat(Math.round(love*100)/100).toFixed(1)+'" max="100"></progress><p>Love Meter</p>'
 	document.getElementById("totaleggs").innerHTML = parseFloat(Math.round(totalEggs*10)/10).toFixed(1);
    	document.getElementById("gametime").innerHTML = parseFloat(Math.round(seconds/10)).toFixed(0);
 	document.getElementById("totalBuildings").innerHTML = buildingsTotal;
 	document.getElementById("eventCount").innerHTML = eventCount;
 	document.getElementById("achives").innerHTML = achievementsUnlocked;
+
+    if (exppoints>=Math.pow(level+1, 3)) {
+        level++;
+        printPopup("Level up! Lv." + level);
+    }
 
 }
 
@@ -71,7 +76,7 @@ function niceTexts() {
 }
 
 function saveGame(){
-	savestring = eggs.toString() + "|"
+	saveString = eggs.toString() + "|"
 	+ love + "|" 
 	+ seconds + "|" 
 	+ breedsClicks + "|" 
@@ -81,16 +86,16 @@ function saveGame(){
 	+ boosteffect + "|"
 	+ boostTimer + "|";
 	for (i=0; i<totalBuildings; i++) {
-		savestring+=buildingsPrice[i] + "|" + buildingsAmount[i] + "|";
+		saveString+=buildingsPrice[i] + "|" + buildingsAmount[i] + "|";
 	}
 	for (j=0; j<totalUpgrades; j++) {
-		savestring += upgradeIsBought[j] + "|";
+		saveString += upgradeIsBought[j] + "|";
 	}
 	for (k=0; k<totalAchievements; k++) {
-		savestring += eggchivmentsUnlocked[k] + "|";
+		saveString += eggchivmentsUnlocked[k] + "|";
 	}
-	console.log(savestring);
-	addCookie("savefile", savestring, 365);
+	console.log(saveString);
+	addCookie("savefile", saveString, 365);
 	document.getElementById('isLoved').innerHTML = "Game Saved!";
 	timercount=0;
 }
@@ -158,20 +163,18 @@ function checkLove() {
         	love=0;
     	}
 }
-
 //Clicking
 var bidoofAppears=0;
 function bidoofClick(e){
-    	eggs += clicks;
-    	updateEggs();
-    	breedsClicks++;
-    	totalEggs = Math.round((totalEggs + clicks)*10)/10;
+	eggs += clicks;
+	updateEggs();
+	breedsClicks++;
+	totalEggs = Math.round((totalEggs + clicks)*10)/10;
 	document.getElementById("clicks").innerHTML = breedsClicks;
-    	document.getElementById("totaleggs").innerHTML = totalEggs;
+	document.getElementById("totaleggs").innerHTML = totalEggs;
 	checkLove();
-    	love=Math.round((love + 0.1)*100)/100;
-    	updateEggs();
-	
+	love=Math.round((love + 0.1)*100)/100;
+	updateEggs();
 	var xcoord=0;
 	var ycoord=0;
 	if (!e) var e=window.event;
@@ -192,14 +195,18 @@ function bidoofClick(e){
 	document.getElementById("clickingEggs").style.left=xcoord+5+"px";
 	document.getElementById("clickingEggs").visibility = "visible";
 	document.getElementById("clickingEggs").style.opacity = "0.4";
+    exppoints++;
+    console.log(exppoints);
+    updateEggs();
+    document.getElementById("exp").innerHTML = '<progress value="' + (exppoints+1-Math.pow(level, 3)).toString() + '" max="' + (Math.pow(level+1, 3)-Math.pow(level, 3)).toString() + '"></progress>';
 }
 
 
 //Menu
 function toggleEggs() {
-    	document.getElementById("powerup").style.display = 'none';
-    	document.getElementById("statistics").style.display = 'none';
-    	document.getElementById("achievements").style.display = 'none';
+	document.getElementById("powerup").style.display = 'none';
+	document.getElementById("statistics").style.display = 'none';
+	document.getElementById("achievements").style.display = 'none';
 	var loadAllEggFactories="";
 	for (i=0; i<totalBuildings; i++) {
 		//loadAllEggFactories+='<button name="upgrade" class="abc" id="upgrade" type="reset" onclick="buy('+i+')">'+buildingsHTML[i]+'<br />'+buildingsDesc[i]+'<br />Mamas: <span id="'+ buildingsNames[i]+ '">0</span><br />Cost: <span id="'+ buildingsCostNames[i] + '">15</span></button><br />';
@@ -208,6 +215,8 @@ function toggleEggs() {
 	console.log(loadAllEggFactories);
 	document.getElementById("upgrade").innerHTML = loadAllEggFactories;
 	document.getElementById("upgrade").style.display = 'inline';
+	document.getElementById("dojo").style.display = 'none';
+	document.getElementById("battles").style.display = 'none';
 	updateEggs();
 	updateEPS();
 }
@@ -217,6 +226,8 @@ function toggleUpgrades () {
     	document.getElementById("statistics").style.display = 'none';
     	document.getElementById("achievements").style.display = 'none';
     	document.getElementById("powerup").style.display = 'inline';
+		document.getElementById("dojo").style.display = 'none';
+		document.getElementById("battles").style.display = 'none';
         var loadAllUpgrades="";
 	for (j=0; j<totalUpgrades; j++) {
 		loadAllUpgrades+='<button class="powered" id="' + upgradeNames[j] + '" type="reset" onclick="buyUpgrade(' + j + ')">' + upgradeHTML[j] + '<br />' + upgradeDesc[j] + '<br /><span id="complectionrate">Cost: <span id="' + upgradeCostNames[j] + '">' + upgradePrice[j] + '</span></span></button>';
@@ -238,13 +249,38 @@ function toggleStats () {
     	document.getElementById("statistics").style.display = "inline";
     	document.getElementById("clicks").innerHTML = breedsClicks;
     	document.getElementById("upgradeCount").innerHTML = upgradeCount;
+		document.getElementById("dojo").style.display = 'none';
+		document.getElementById("battles").style.display = 'none';
 }
 function toggleAchives () {
     	document.getElementById("powerup").style.display = 'none';
     	document.getElementById("statistics").style.display = 'none';
     	document.getElementById("upgrade").style.display = 'none';
     	document.getElementById("achievements").style.display = 'inline-block';
-	refreshAchives();
+		document.getElementById("dojo").style.display = 'none';
+		document.getElementById("battles").style.display = 'none';
+		refreshAchives();
+}
+function toggleDojo () {
+	document.getElementById("powerup").style.display = 'none';
+	document.getElementById("statistics").style.display = 'none';
+	document.getElementById("upgrade").style.display = 'none';
+	document.getElementById("achievements").style.display = 'none';
+	document.getElementById("dojo").style.display = 'inline';
+	document.getElementById("battles").style.display = 'none';
+	var loadDojo="";
+	for (i=0; i<totalDojos; i++) {
+		loadDojo+='<button name="upgrade" class="abc" id="upgrade" type="reset" onclick="buyDojos(' + i + ')"><div id="' + dojoHTML[i] + '" class="buildingamount">0</div><div id="buildingdetails"><span id="subthings">'+ dojoNames[i] + '</span><br />' + dojoDesc[i] + '<br/>Cost: <span id="' + dojoHTML[i] + 'Price' + '">' + dojoPrice[i] + '</span></div><span id="dojotext" class="dojotext">Giving you a whooping '+ dojoGain[i] + 'XP/s</span></button><br />';
+	}
+	document.getElementById("dojo").innerHTML = loadDojo;
+}
+function toggleBattles() {
+	document.getElementById("powerup").style.display = 'none';
+	document.getElementById("statistics").style.display = 'none';
+	document.getElementById("upgrade").style.display = 'none';
+	document.getElementById("achievements").style.display = 'none';
+	document.getElementById("dojo").style.display = 'none';
+	document.getElementById("battles").style.display = 'inline';
 }
 function refreshAchives () {
 	var loadAllAchievements="";
@@ -306,9 +342,9 @@ var upgradeDesc = ["Clicking Bidoofs gives 2 times as much eggs",
 
 function upgradeTypeThings (number) {
 	if (upgradeType[number]==0) {clicks = clicks * upgradeValue[number];baseClicks = baseClicks * upgradeValue[number];} 
-	else if (upgradeType[number]==1) {lovedrop = lovedrop * upgradeValue[number];} 
+	else if (upgradeType[number]==1) {loveDrop = loveDrop * upgradeValue[number];}
 	else if (upgradeType[number]==2) {eventsChance = eventsChance * upgradeValue[number];randomTime=Math.round((Math.random()*(eventsChance-(eventsChance*0.2)))+eventsChance*0.2);timeranotherone=0;} 
-	else if (upgradeType[number]==3) {epsmodifier=epsmodifier * upgradeValue[number];} 
+	else if (upgradeType[number]==3) {EPSModifier=EPSModifier * upgradeValue[number];}
 	else if (upgradeType[number]==4) {clickBoost = clickBoost + upgradeValue[number];}
 
 	upgradeCount++;
@@ -341,7 +377,7 @@ var buildingsTotal = 0;
 var buildingsHTML = ["Mama Bidoof","Wannabe Shiny Painted Bidoof","Zombidoof","KopatschBidoof","Nuke Bidoof","The Bidoof Thinker","Russian Brute Bidoofs","BrodeckiBidoof"];
 var buildingsDesc = ["Apparently only makes 0.1 eggs per second.",
 "Gives ya 0.6 eggs per second. It isn't really shiny. It's painted.",
-"'Converts' 3 brains into eggs per second ( ĂŤË‡Ă‚Â° ĂŤĹ›Äâ€“ ĂŤË‡Ă‚Â°)",
+"'Converts' 3 brains into eggs per second ( ͡° ͜ʖ ͡°)",
 "A group of explorers digging out 11 eggs per second.",
 "30-Bidoof big terroristic organisation trapping 45 people in eggs per second.",
 "Evolution line with minibrains in their teeth allowing to make 242 eggs per second.",
@@ -373,6 +409,33 @@ function debug() {
     	updateEggs();
 	saveGame();
 }
+
+//Dojos
+var totalDojos = 1;
+var dojoPrice = [20];
+var dojoAmount = [0];
+var dojoGain = [1];
+var dojoNames = ["Punching bag"];
+var dojoDesc = ["No, Bidoofs don't punch this one. They chew it instead."];
+var dojoHTML = ["pbag"];
+function buyDojos(order) {
+	if(eggs >= dojoPrice[order]) {
+		dojoAmount[order] += 1;
+		eggs = Math.round(eggs-dojoPrice[order]);
+		dojoPrice[order] = Math.floor(dojoPrice[order] *1.3);
+
+		document.getElementById(dojoHTML[order]).innerHTML = dojoAmount[order];
+		document.getElementById(dojoHTML[order]+"Price").innerHTML = dojoPrice[order];
+
+		updateEggs();
+		updateEPS();
+		console.log(dojoAmount);
+	}
+
+}
+
+
+
 
 //Achievements
 var totalAchievements = 3;
@@ -421,9 +484,6 @@ function printPopup(string) {
 	isPopupOn=1;
 	popupTimer=0;
 }
-	
-		
-//if (eggs>=30) {
 
 
 var timercount = 0;
@@ -499,7 +559,7 @@ var timer = setTimeout(function() {
 	}
 	
     	totalEggs = Math.round((totalEggs+eggsPerSecond/10*delay)*100)/100;
-    	love = Math.round((love-lovedrop*delay)*1000)/1000;
+    	love = Math.round((love-loveDrop*delay)*1000)/1000;
 	if (loaded==1) {
 		updateEggs();
 	}

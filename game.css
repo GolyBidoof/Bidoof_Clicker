@@ -21,6 +21,10 @@ div {
 #subthings {
     font-size: 18px;
 }
+#dojotext {
+    font-size: 15px;
+    text-align: center;
+}
 #clicky {
     width: 0px;
     height: 0px;
@@ -48,36 +52,42 @@ div {
     border: none;
     background-color: rgba(255, 255, 255, 0.2);
 }
+.loveposition {
+    position: relative;
+}
+.lovelove p {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    padding: 0px;
+    width: 300px;
+    height: 14px;
+    color: #FFF;
+    margin: 0px;
+    font-size: 14px;
+    //border: 1px solid white;
+}
 progress {
 	background-color: #966E41;
 	border: 0;
 	width: 300px;
-	height: 8px;
+	height: 14px;
 	border-radius: 9px;
+    //position: relative;
+    //display: block;
 }
 progress::-webkit-progress-bar {
 	background-color: #966E41;
 	border-radius: 9px;
 }
 progress::-webkit-progress-value {
-	background: #966E41;
-	background: -moz-linear-gradient(top,  #CDAD81 0%, #C36EBC 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#CDAD81), color-stop(100%,#C36EBC));
-	background: -webkit-linear-gradient(top,  #CDAD81 0%,#C36EBC 100%);
-	background: -o-linear-gradient(top,  #CDAD81 0%,#C36EBC 100%);
-	background: -ms-linear-gradient(top,  #CDAD81 0%,#C36EBC 100%);
-	background: linear-gradient(to bottom,  #CDAD81 0%,#C36EBC 100%);
+	background: #C36EBC;
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8e', endColorstr='#a5c956',GradientType=0 );
 	border-radius: 9px;
+    border-right: 10px;
 }
 progress::-moz-progress-bar {
-	background: #966E41;
-	background: -moz-linear-gradient(top,  #CDAD81 0%, #C36EBC 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#CDAD81), color-stop(100%,#C36EBC));
-	background: -webkit-linear-gradient(top,  #cdeb8e 0%,#C36EBC 100%);
-	background: -o-linear-gradient(top,  #CDAD81 0%,#C36EBC 100%);
-	background: -ms-linear-gradient(top,  #CDAD81 0%,#C36EBC100%);
-	background: linear-gradient(to bottom,  #CDAD81 0%,#C36EBC 100%);
+	background: #C36EBC;
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8e', endColorstr='#a5c956',GradientType=0 );
 	border-radius: 9px;
 }
