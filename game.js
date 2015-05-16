@@ -388,13 +388,13 @@ function upgradeTypeThings (number) {
 }
 
 function buyUpgrade (number) {
-   	if(eggs >= upgradePrice[number]) {  
-    		eggs = eggs - upgradePrice[number];
-    		upgradeTypeThings(number);
-    		upgradeIsBought[number]=1;
-    	}
-	document.getElementById(upgradeCostNames[number]).innerHTML = "DONE";
-    	document.getElementById(upgradeNames[number]).disabled = true; 
+   	if(eggs >= upgradePrice[number]) {
+		eggs = eggs - upgradePrice[number];
+		upgradeTypeThings(number);
+		upgradeIsBought[number] = 1;
+		document.getElementById(upgradeCostNames[number]).innerHTML = "DONE";
+		document.getElementById(upgradeNames[number]).disabled = true;
+	}
 }
 
 function debugLove() {
