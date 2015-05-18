@@ -20,7 +20,8 @@ var achievementsUnlocked = 0;
 var oldTimer = new Date().getTime();
 var delay;
 var expPoints = 0;
-var level=1;
+var level = 1;
+var loveMessageFlag = 0;
 
 //BigClick
 function updateEPS() {
@@ -75,9 +76,13 @@ function niceTexts() {
 	if (totalEggs>=100000) {document.getElementById("thingsThatHappen").innerHTML = "One of the Bidoofs won the national election...";}
 	if (totalEggs>=1000000) {document.getElementById("thingsThatHappen").innerHTML = "Grandma Bidoof just started her own cereal brand...";}
 	if (totalEggs>=10000000) {document.getElementById("thingsThatHappen").innerHTML = "Bidoof political party split, riots start in capital...";}
+	if (love>=60 && loveMessageFlag==1) {document.getElementById("thingsThatHappen").innerHTML = "So far you've managed to please your Bidoofs...";}
+	if (love<60 && loveMessageFlag==1) {document.getElementById("thingsThatHappen").innerHTML = "Bad things may happen if your love is low...";}
+	if (love<40 && loveMessageFlag==1) {document.getElementById("thingsThatHappen").innerHTML = "Bad things WILL happen now that your love is low!";}
 	if (boosteffect==1) {document.getElementById("thingsThatHappen").innerHTML = "AAAA BIDOOFBOOST AAA EGGS";}
-	//console.log(totalEggs);
+	//console.log(totalEggs);}
 }
+
 
 function saveGame(){
 	saveString = eggs.toString() + "|"
@@ -411,7 +416,7 @@ var buildingsTotal = 0;
 var buildingsHTML = ["Mama Bidoof","Wannabe Shiny Painted Bidoof","Zombidoof","KopatschBidoof","Nuke Bidoof","The Bidoof Thinker","Russian Brute Bidoofs","BrodeckiBidoof"];
 var buildingsDesc = ["Apparently only makes 0.1 eggs per second.",
 "Gives ya 0.6 eggs per second. It isn't really shiny. It's painted.",
-"'Converts' 3 brains into eggs per second ( ͡° ͜ʖ ͡°)",
+"'Converts' 3 brains into eggs per second ( ÍˇÂ° ÍśĘ– ÍˇÂ°)",
 "A group of explorers digging out 11 eggs per second.",
 "30-Bidoof big terroristic organisation trapping 45 people in eggs per second.",
 "Evolution line with minibrains in their teeth allowing to make 242 eggs per second.",
@@ -527,8 +532,16 @@ var seconds=0;
 var boostTimer=0;
 var bidoofAppearsTimer=0;
 var popupTimer=0;
+var loveMessageTimer = 0;
+var loveMessageRandom = 0;
+var loveCooldown = 0;
 //refresher
 var timer = setTimeout(function() {
+	loveMessageRandom = Math.round(Math.random()*100)
+	loveCooldown++;
+	if (loveMessageRandom == 42 && loveCooldown>100) {
+		loveMessageFlag=1;
+	}
 	timer = new Date().getTime();
 	delay = Math.round((timer - oldTimer)/100);
 	oldTimer=timer;
@@ -541,6 +554,14 @@ var timer = setTimeout(function() {
 	if (loaded==1 && displayed==0) {
 		document.getElementById('isLoved').innerHTML = "Save loaded!";
 		displayed=1;
+	}
+	if (loveMessageFlag==1) {
+		loveMessageTimer+=delay;
+	}
+	if (loveMessageTimer>=50) {
+		loveMessageFlag=0;
+		loveMessageTimer=0;
+		loveCooldown=0;
 	}
 
 	if (timercount>=50) {
