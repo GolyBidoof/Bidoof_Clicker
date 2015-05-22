@@ -1,4 +1,3 @@
-
 body {
     text-align: center;
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
@@ -211,6 +210,7 @@ progress::-webkit-progress-bar {
     padding-top: 0px;
     padding-bottom: 0px;
     padding-left: 0px;
+    position: absolute;
 }
 br.powerup {
 	column-span:all;
