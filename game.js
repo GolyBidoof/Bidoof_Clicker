@@ -254,6 +254,7 @@ function toggleEggs() {
 	document.getElementById("battles").style.display = 'none';
 	updateEggs();
 	updateEPS();
+	toggledAchives=0;
 }
 
 function toggleUpgrades () {
@@ -276,6 +277,7 @@ function toggleUpgrades () {
 			document.getElementById(upgradeCostNames[i]).innerHTML = "DONE"; 
 		}
 	}
+	toggledAchives=0;
 }
 function toggleStats () {
     	document.getElementById("powerup").style.display = 'none';
@@ -286,7 +288,9 @@ function toggleStats () {
     	document.getElementById("upgradeCount").innerHTML = upgradeCount.toString();
 		document.getElementById("dojo").style.display = 'none';
 		document.getElementById("battles").style.display = 'none';
+	toggledAchives=0;
 }
+var toggledAchives=0;
 function toggleAchives () {
     	document.getElementById("powerup").style.display = 'none';
     	document.getElementById("statistics").style.display = 'none';
@@ -295,6 +299,8 @@ function toggleAchives () {
 		document.getElementById("dojo").style.display = 'none';
 		document.getElementById("battles").style.display = 'none';
 		refreshAchives();
+		toggledAchives=1;
+		
 }
 function toggleDojo () {
 	document.getElementById("powerup").style.display = 'none';
@@ -312,6 +318,7 @@ function toggleDojo () {
 		document.getElementById(dojoHTML[i]).innerHTML = dojoAmount[i].toString();
 		document.getElementById(dojoHTML[i] + "Price").innerHTML = dojoPrice[i].toString();
 	}
+	toggledAchives=0;
 }
 function toggleBattles() {
 	document.getElementById("powerup").style.display = 'none';
@@ -320,12 +327,13 @@ function toggleBattles() {
 	document.getElementById("achievements").style.display = 'none';
 	document.getElementById("dojo").style.display = 'none';
 	document.getElementById("battles").style.display = 'inline';
+	toggledAchives=0;
 }
 function refreshAchives () {
 	var loadAllAchievements="";
 	for (i=0; i<totalAchievements; i++) {
 		if (eggchivmentsUnlocked[i]==0) {
-			loadAllAchievements+='<button name="achievement" class="abc" id="achievement" type="reset" disabled><div class="achievementdetails"><span id="subthings">' + eggchivmentsNames[i] + '</span></br>' + eggchivmentsSubNames[i] + '</div><div id="achievementamount"><img style="width:80px; height:80px" class="achievementamount" id="achievement' + i +'" src="Bidoof100pxblack.png" align="right"></div></button></br>'
+			loadAllAchievements+='<button name="achievement" class="abc" id="achievement" type="reset" disabled><progress value="'+ eggchivmentalTypes(i) +'" max="' + eggchivmentsValues[i] + '"></progress><div class="achievementdetails"><span id="subthings">' + eggchivmentsNames[i] + '</span></br>' + eggchivmentsSubNames[i] + '</div><div id="achievementamount"><img style="width:80px; height:80px" class="achievementamount" id="achievement' + i +'" src="Bidoof100pxblack.png" align="right"></div></button></br>'
 		} else {
 			loadAllAchievements+='<button name="achievement" class="abc" id="achievement" type="reset" disabled><div class="achievementdetails"><span id="subthings">' + eggchivmentsNames[i] + '</span><br/>' + eggchivmentsTitles[i] + '</div><div id="achievementamount"><img style="width:80px; height:80px" class="achievementamount" id="achievement' + i +'" src="Bidoof100px.png" align="right"></div></button></br>'
 		}
@@ -416,7 +424,7 @@ var buildingsTotal = 0;
 var buildingsHTML = ["Mama Bidoof","Wannabe Shiny Painted Bidoof","Zombidoof","KopatschBidoof","Nuke Bidoof","The Bidoof Thinker","Russian Brute Bidoofs","BrodeckiBidoof"];
 var buildingsDesc = ["Apparently only makes 0.1 eggs per second.",
 "Gives ya 0.6 eggs per second. It isn't really shiny. It's painted.",
-"'Converts' 3 brains into eggs per second ( ÍˇÂ° ÍśĘ– ÍˇÂ°)",
+"'Converts' 3 brains into eggs per second ( ĂŤË‡Ă‚Â° ĂŤĹ›Äâ€“ ĂŤË‡Ă‚Â°)",
 "A group of explorers digging out 11 eggs per second.",
 "30-Bidoof big terroristic organisation trapping 45 people in eggs per second.",
 "Evolution line with minibrains in their teeth allowing to make 242 eggs per second.",
@@ -481,6 +489,16 @@ var eggchivmentsUnlocked = [0,0,0];
 var eggchivmentsNames = ["Newbie Breeder", 
 "Kinda Advanced Breeder", 
 "I really want a shiny..."];
+var eggchivmentsValues = [10, 50, 1];
+var eggchivmentsTypes = [0, 0, 1];
+
+function eggchivmentalTypes(call) {
+	if (eggchivmentsTypes[call]==0) {
+		return totalEggs;
+	} else if (eggchivmentsTypes[call]==1) {
+		return buildingsAmount[1];
+	}
+}
 
 var eggchivmentsTitles = ["You have made 10 eggs!",
 "You have made 50 eggs!",
@@ -491,9 +509,9 @@ var eggchivmentsSubNames = ["Make 10 eggs.",
 "Buy 'that' guy who isn't shiny..."];
 
 function achievementChecker() {
-	if (totalEggs>=10 && eggchivmentsUnlocked[0]==0) {unlockAchievement(0,eggchivmentsNames[0]);}
-	if (totalEggs>=50 && eggchivmentsUnlocked[1]==0) {unlockAchievement(1,eggchivmentsNames[1]);}
-	if (buildingsAmount[1]>0 && eggchivmentsUnlocked[2]==0) {unlockAchievement(2,eggchivmentsNames[2]);}
+	if (totalEggs>=eggchivmentsValues[0] && eggchivmentsUnlocked[0]==0) {unlockAchievement(0,eggchivmentsNames[0]);}
+	if (totalEggs>=eggchivmentsValues[1] && eggchivmentsUnlocked[1]==0) {unlockAchievement(1,eggchivmentsNames[1]);}
+	if (buildingsAmount[1]>=eggchivmentsValues[2] && eggchivmentsUnlocked[2]==0) {unlockAchievement(2,eggchivmentsNames[2]);}
 
 }
 
@@ -611,6 +629,9 @@ var timer = setTimeout(function() {
 		isPopupOn=0;
 		popupTimer=0;
 		document.getElementById("popupwindow").style.opacity = 0;
+	}
+	if (toggledAchives==1) {
+		refreshAchives();
 	}
 	
 	totalEggs = Math.round((totalEggs+eggsPerSecond/10*delay)*100)/100;
