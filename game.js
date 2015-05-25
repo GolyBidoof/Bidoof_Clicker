@@ -484,13 +484,14 @@ function buyDojos(order) {
 
 
 //Achievements
-var totalAchievements = 3;
-var eggchivmentsUnlocked = [0,0,0];
+var totalAchievements = 4;
+var eggchivmentsUnlocked = [0,0,0,0];
 var eggchivmentsNames = ["Newbie Breeder", 
 "Kinda Advanced Breeder", 
-"I really want a shiny..."];
-var eggchivmentsValues = [10, 50, 1];
-var eggchivmentsTypes = [0, 0, 1];
+"I really want a shiny...",
+"Even Neaty Breeder"];
+var eggchivmentsValues = [10, 50, 1, 200];
+var eggchivmentsTypes = [0, 0, 1, 0];
 
 function eggchivmentalTypes(call) {
 	if (eggchivmentsTypes[call]==0) {
@@ -502,17 +503,18 @@ function eggchivmentalTypes(call) {
 
 var eggchivmentsTitles = ["You have made 10 eggs!",
 "You have made 50 eggs!",
-"You've bought Shiny Wannabe Bidoof!"];
+"You've bought Shiny Wannabe Bidoof!",
+"You've made 200 eggs!"];
 
 var eggchivmentsSubNames = ["Make 10 eggs.", 
 "Make 50 eggs.", 
-"Buy 'that' guy who isn't shiny..."];
+"Buy 'that' guy who isn't shiny...",
+"Make 200 eggs."];
 
 function achievementChecker() {
-	if (totalEggs>=eggchivmentsValues[0] && eggchivmentsUnlocked[0]==0) {unlockAchievement(0,eggchivmentsNames[0]);}
-	if (totalEggs>=eggchivmentsValues[1] && eggchivmentsUnlocked[1]==0) {unlockAchievement(1,eggchivmentsNames[1]);}
-	if (buildingsAmount[1]>=eggchivmentsValues[2] && eggchivmentsUnlocked[2]==0) {unlockAchievement(2,eggchivmentsNames[2]);}
-
+	for (i=0; i<totalAchievements; i++) {
+		if (eggchivmentalTypes(i)>=eggchivmentsValues[i] && eggchivmentsUnlocked[i]==0) {unlockAchievement(i,eggchivmentsNames[i]);}
+	}
 }
 
 function unlockAchievement(number, text) {
