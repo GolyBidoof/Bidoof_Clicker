@@ -64,6 +64,9 @@ function updateEggs(){
         printPopup("Level up! Lv." + level);
     }
 	updateExp();
+	document.getElementById("exptooltip").title = "Exp. Points per Second: " + currentExpGain.toString();
+	document.getElementById("totalExpPoints").innerHTML = (Math.round(expPoints*10)/10).toString();
+	
 
 }
 
@@ -232,6 +235,7 @@ function updateExp() {
 
 	} else {
 		expstring += (expPoints - Math.pow(level, 3)).toString() + '" max="' + (Math.pow(level + 1, 3) - Math.pow(level, 3)).toString() + '"></progress><p>Exp Points: ' + (Math.round(expPoints - Math.pow(level, 3))).toString() + '/' + (Math.pow(level + 1, 3) - Math.pow(level, 3)).toString() + '; Lv.' + level.toString() + '</p>';
+
 	}
 	document.getElementById("exp").innerHTML = expstring;
 }
@@ -299,8 +303,7 @@ function toggleAchives () {
 		document.getElementById("dojo").style.display = 'none';
 		document.getElementById("battles").style.display = 'none';
 		refreshAchives();
-		toggledAchives=1;
-		
+		toggledAchives=1;		
 }
 function toggleDojo () {
 	document.getElementById("powerup").style.display = 'none';
@@ -327,6 +330,7 @@ function toggleBattles() {
 	document.getElementById("achievements").style.display = 'none';
 	document.getElementById("dojo").style.display = 'none';
 	document.getElementById("battles").style.display = 'inline';
+
 	toggledAchives=0;
 }
 function refreshAchives () {
@@ -424,7 +428,7 @@ var buildingsTotal = 0;
 var buildingsHTML = ["Mama Bidoof","Wannabe Shiny Painted Bidoof","Zombidoof","KopatschBidoof","Nuke Bidoof","The Bidoof Thinker","Russian Brute Bidoofs","BrodeckiBidoof"];
 var buildingsDesc = ["Apparently only makes 0.1 eggs per second.",
 "Gives ya 0.6 eggs per second. It isn't really shiny. It's painted.",
-"'Converts' 3 brains into eggs per second ( ĂŤË‡Ă‚Â° ĂŤĹ›Äâ€“ ĂŤË‡Ă‚Â°)",
+"'Converts' 3 brains into eggs per second ( Ä‚Ĺ¤Ă‹â€ˇÄ‚â€šĂ‚Â° Ä‚Ĺ¤Äąâ€şĂ„ÂĂ˘â‚¬â€ś Ä‚Ĺ¤Ă‹â€ˇÄ‚â€šĂ‚Â°)",
 "A group of explorers digging out 11 eggs per second.",
 "30-Bidoof big terroristic organisation trapping 45 people in eggs per second.",
 "Evolution line with minibrains in their teeth allowing to make 242 eggs per second.",
