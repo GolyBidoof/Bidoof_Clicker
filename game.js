@@ -64,7 +64,7 @@ function updateEggs(){
         printPopup("Level up! Lv." + level);
     }
 	updateExp();
-	document.getElementById("exptooltip").title = "Exp. Points per Second: " + currentExpGain.toString();
+	document.getElementById("expToolTip").title = "Exp. Points per Second: " + currentExpGain.toString();
 	document.getElementById("totalExpPoints").innerHTML = (Math.round(expPoints*10)/10).toString();
 	
 
@@ -97,18 +97,23 @@ function saveGame(){
 	+ buff + "|"
 	+ boosteffect + "|"
 	+ boostTimer + "|";
+	saveString += "Q|"
 	for (i=0; i<totalBuildings; i++) {
 		saveString+=buildingsPrice[i] + "|" + buildingsAmount[i] + "|";
 	}
+	saveString += "X|";
 	for (j=0; j<totalUpgrades; j++) {
 		saveString += upgradeIsBought[j] + "|";
 	}
+	saveString += "Y|";
 	for (k=0; k<totalAchievements; k++) {
 		saveString += eggchivmentsUnlocked[k] + "|";
 	}
+	saveString += "Z|";
 	for (i=0; i<totalDojos; i++) {
 		saveString += dojoAmount[i] + "|";
 	}
+	saveString += "V|";
 	saveString += expPoints + "|";
 	console.log(saveString);
 	addCookie("savefile", saveString, 365);
@@ -135,7 +140,12 @@ function getCookie() {
 		
 		var arrayofvalues = loadedsave.split("|");
 		//document.getElementById('thingsThatHappen').innerHTML = arrayofvalues;
-
+		var arrayofbuildings = arrayofvalues.indexOf("Q") + 1;
+		var arrayofupgrades = arrayofvalues.indexOf("X") + 1;
+		var arrayofachievements = arrayofvalues.indexOf("Y") + 1;
+		var arrayofdojos = arrayofvalues.indexOf("Z") + 1;
+		var arrayofrest = arrayofvalues.indexOf("V") + 1;
+		console.log(arrayofbuildings);
 		eggs=parseInt(arrayofvalues[0]);
 		love=arrayofvalues[1];
 		seconds=parseInt(arrayofvalues[2]);
@@ -147,34 +157,29 @@ function getCookie() {
 		boostTimer=parseInt(arrayofvalues[8]);
 
 		for (i=0; i<totalBuildings; i++) {
-			buildingsPrice[i] = parseInt(arrayofvalues[9+i*2]);
-			buildingsAmount[i] = parseInt(arrayofvalues[10+i*2]);
+			buildingsPrice[i] = parseInt(arrayofvalues[arrayofbuildings+i*2]);
+			buildingsAmount[i] = parseInt(arrayofvalues[arrayofbuildings+1+i*2]);
 		}
 
 		for (var j=0; j<totalUpgrades; j++) {
-			var yourloadedupgradenumber=9+(totalBuildings*2)+j;
-			upgradeIsBought[j] = parseInt(arrayofvalues[yourloadedupgradenumber]);
-		}
-
-		for (var k=0; k<totalUpgrades; k++) {
-			if (upgradeIsBought[k]==1) {
-				upgradeTypeThings(k);
+			upgradeIsBought[j] = parseInt(arrayofvalues[arrayofupgrades+j]);
+			if (upgradeIsBought[j]==1) {
+				upgradeTypeThings(j);
 			}
 		}
+
 		for (var l=0; l<totalAchievements; l++) {
-			eggchivmentsUnlocked[l]=arrayofvalues[9+totalBuildings*2+totalUpgrades+l];
+			eggchivmentsUnlocked[l]=arrayofvalues[arrayofachievements+l];
 		}
-		if (arrayofvalues.length>(9 + totalBuildings * 2 + totalUpgrades + totalAchievements)) {
 		for (i=0; i<totalDojos; i++) {
-			dojoAmount[i] = parseInt(arrayofvalues[9 + totalBuildings * 2 + totalUpgrades + totalAchievements + i]);
+			dojoAmount[i] = parseInt(arrayofvalues[arrayofdojos + i]);
 			var tempDojos=dojoAmount[i];
 			for (j=tempDojos; j>0; j--) {
 				dojoPrice[i]=Math.floor(dojoPrice[i]*1.3);
 			}
 
 		}
-		expPoints=parseInt(arrayofvalues[9+totalBuildings*2+totalUpgrades+totalAchievements+totalDojos]);
-		}
+		expPoints=parseInt(arrayofvalues[arrayofrest]);
 	}
 	printPopup("Welcome to Bidoof Clicker, 2013-2015 Szymbar15");
 	loaded=1;
@@ -229,7 +234,7 @@ function bidoofClick(e){
 }
 
 function updateExp() {
-	var expstring = '<progress value="';
+	var expstring = '<progress id="expbar" value="';
 	if (level == 1) {
 		expstring += (expPoints + 1 - Math.pow(level, 3)).toString() + '" max="' + (Math.pow(level + 1, 3)).toString() + '"></progress><p>Exp Points: ' + (Math.round(expPoints)).toString() + '/' + (Math.pow(level + 1, 3)).toString() + '; Lv.' + level.toString() + '</p>';
 
