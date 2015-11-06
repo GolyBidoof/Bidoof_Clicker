@@ -66,6 +66,25 @@ div {
     font-size: 14px;
     //border: 1px solid white;
 }
+.tooltip {
+    display: inline;
+    position: relative;
+}
+.tooltip:hover:after{
+    background: #333;
+    background: rgba(0,0,0,.8);
+    border-radius: 5px;
+    bottom: 26px;
+    color: #fff;
+    content: attr(title);
+    left: 10%;
+    padding: 5px 15px;
+    position: absolute;
+    z-index: 98;
+    width: 220px;
+    font-size: 12px;
+    white-space: pre-line;
+}
 progress {
     background-color: #966E41;
     border: 0;
