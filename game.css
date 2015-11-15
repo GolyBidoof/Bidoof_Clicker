@@ -91,6 +91,9 @@ progress {
     width: 300px;
     height: 14px;
     border-radius: 9px;
+    -webkit-transition : width 5s ease;
+    -moz-transition : width 5s ease;
+    transition : width 5s ease;
 / / position : relative;
 / / display : block;
 }
@@ -121,6 +124,7 @@ progress::-webkit-progress-bar {
     border-radius: 9px;
 }
 .progress-value {
+
 	padding: 0px 5px;
 	line-height: 20px;
 	margin-left: 5px;

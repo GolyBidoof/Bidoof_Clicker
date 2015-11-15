@@ -342,7 +342,7 @@ function refreshAchives () {
 	var loadAllAchievements="";
 	for (i=0; i<totalAchievements; i++) {
 		if (eggchivmentsUnlocked[i]==0) {
-			loadAllAchievements+='<button name="achievement" class="abc" id="achievement" type="reset" disabled><progress value="'+ eggchivmentalTypes(i) +'" max="' + eggchivmentsValues[i] + '"></progress><div class="achievementdetails"><span id="subthings">' + eggchivmentsNames[i] + '</span></br>' + eggchivmentsSubNames[i] + '</div><div id="achievementamount"><img style="width:80px; height:80px" class="achievementamount" id="achievement' + i +'" src="Bidoof100pxblack.png" align="right"></div></button></br>'
+			loadAllAchievements+='<button name="achievement" class="abc" id="achievement" type="reset" disabled><progress id="exp" value="'+ eggchivmentalTypes(i) +'" max="' + eggchivmentsValues[i] + '"></progress><div class="achievementdetails"><span id="subthings">' + eggchivmentsNames[i] + '</span></br>' + eggchivmentsSubNames[i] + '</div><div id="achievementamount"><img style="width:80px; height:80px" class="achievementamount" id="achievement' + i +'" src="Bidoof100pxblack.png" align="right"></div></button></br>'
 		} else {
 			loadAllAchievements+='<button name="achievement" class="abc" id="achievement" type="reset" disabled><div class="achievementdetails"><span id="subthings">' + eggchivmentsNames[i] + '</span><br/>' + eggchivmentsTitles[i] + '</div><div id="achievementamount"><img style="width:80px; height:80px" class="achievementamount" id="achievement' + i +'" src="Bidoof100px.png" align="right"></div></button></br>'
 		}
@@ -433,7 +433,7 @@ var buildingsTotal = 0;
 var buildingsHTML = ["Mama Bidoof","Wannabe Shiny Painted Bidoof","Zombidoof","KopatschBidoof","Nuke Bidoof","The Bidoof Thinker","Russian Brute Bidoofs","BrodeckiBidoof"];
 var buildingsDesc = ["Apparently only makes 0.1 eggs per second.",
 "Gives ya 0.6 eggs per second. It isn't really shiny. It's painted.",
-"'Converts' 3 brains into eggs per second ( Ä‚Ĺ¤Ă‹â€ˇÄ‚â€šĂ‚Â° Ä‚Ĺ¤Äąâ€şĂ„ÂĂ˘â‚¬â€ś Ä‚Ĺ¤Ă‹â€ˇÄ‚â€šĂ‚Â°)",
+"'Converts' 3 brains into eggs per second ( ͡° ͜ʖ ͡°)",
 "A group of explorers digging out 11 eggs per second.",
 "30-Bidoof big terroristic organisation trapping 45 people in eggs per second.",
 "Evolution line with minibrains in their teeth allowing to make 242 eggs per second.",
@@ -467,13 +467,13 @@ function debug() {
 }
 
 //Dojos
-var totalDojos = 1;
-var dojoPrice = [20];
-var dojoAmount = [0];
-var dojoGain = [0.1];
-var dojoNames = ["Punching bag"];
-var dojoDesc = ["No, Bidoofs don't punch this one. They chew it instead."];
-var dojoHTML = ["pbag"];
+var totalDojos = 2;
+var dojoPrice = [20, 500];
+var dojoAmount = [0, 0];
+var dojoGain = [0.1, 1];
+var dojoNames = ["Punching bag", "Cardboard Zigzagoon"];
+var dojoDesc = ["No, Bidoofs don't punch this one. They chew it instead.", "Just Bidoofs rebel movement against the discrimination of Sinnoh."];
+var dojoHTML = ["pbag", "czig"];
 var currentExpGain = 0;
 function buyDojos(order) {
 	if(eggs >= dojoPrice[order]) {
@@ -493,32 +493,39 @@ function buyDojos(order) {
 
 
 //Achievements
-var totalAchievements = 4;
-var eggchivmentsUnlocked = [0,0,0,0];
+var totalAchievements = 5;
+var eggchivmentsUnlocked = [0,0,0,0,0];
 var eggchivmentsNames = ["Newbie Breeder", 
 "Kinda Advanced Breeder", 
 "I really want a shiny...",
-"Even Neaty Breeder"];
-var eggchivmentsValues = [10, 50, 1, 200];
-var eggchivmentsTypes = [0, 0, 1, 0];
+"Even Neaty Breeder",
+"Hostile Fiend In Making"];
+var eggchivmentsValues = [10, 50, 1, 200, 5];
+var eggchivmentsTypes = [0, 0, 1, 0, 2];
 
 function eggchivmentalTypes(call) {
 	if (eggchivmentsTypes[call]==0) {
 		return totalEggs;
 	} else if (eggchivmentsTypes[call]==1) {
 		return buildingsAmount[1];
+	} else if (eggchivmentsTypes[call]==2) {
+		return level;
 	}
 }
 
 var eggchivmentsTitles = ["You have made 10 eggs!",
 "You have made 50 eggs!",
 "You've bought Shiny Wannabe Bidoof!",
-"You've made 200 eggs!"];
+"You've made 200 eggs!",
+"You're Lv.5 now!"];
 
 var eggchivmentsSubNames = ["Make 10 eggs.", 
 "Make 50 eggs.", 
 "Buy 'that' guy who isn't shiny...",
-"Make 200 eggs."];
+"Make 200 eggs.",
+"Get to the level 5"];
+
+
 
 function achievementChecker() {
 	for (i=0; i<totalAchievements; i++) {
@@ -543,7 +550,8 @@ function achievementsAmount() {
 	}
 }
 	
-
+//Battles
+//PLAECHOLDER
 //Call popup
 function printPopup(string) {
 	document.getElementById("popupwindow").innerHTML = string;
