@@ -26,6 +26,7 @@ var expPointGain = 1;
 
 //BigClick
 function updateEPS() {
+	updateBuildingsDesc();
 	eggsPerSecond=0;	
 	for (i=0; i < totalBuildings; i++) {
 		eggsPerSecond = Math.round(((eggsPerSecond+(buildingsAmount[i]*buildingsGain[i])))*100)/100;
@@ -137,8 +138,9 @@ function addCookie(cname, cvalue, exdays) {
 function getCookie() {
 	var loadedsave = document.cookie;
 	var s=loadedsave.length;
-	toggleEggs();
 	console.log(loadedsave);
+	updateBuildingsDesc();
+	toggleEggs();
 	if (s!=0) {
 		loadedsave=loadedsave.substring(10,s);
 		console.log(loadedsave);
@@ -203,10 +205,11 @@ function getCookie() {
 			if (eggchivmentalTypes(i)>=eggchivmentsValues[i] && eggchivmentsUnlocked[i]==0) {eggchivmentsUnlocked[i] = 1;}
 		}
 	}
-	printPopup("Welcome to Bidoof Clicker, 2013-2016 Szymbar");
-	loaded=1;
+	toggleEggs();
 	updateEggs();
 	updateEPS();
+	printPopup("Welcome to Bidoof Clicker, 2013-2016 Szymbar");
+	loaded=1;
 }
 window.onload = getCookie;
 
@@ -400,14 +403,18 @@ var buildingsNames = ["mama", "shiny", "zombie", "kopatsch", "ahmed", "thinker",
 var buildingsCostNames = ["mamaCost", "shinyCost", "zombieCost", "kopatschCost", "ahmedCost", "thinkerCost", "bruteCost","liquidCost"];
 var buildingsTotal = 0;
 var buildingsHTML = ["Mama Bidoof","Wannabe Shiny Painted Bidoof","Zombidoof","Simonnnnnn Bidoof","Nuke Bidoof","The Bidoof Thinker","Russian Brute Bidoofs","Liquid Plasma Bidoof"];
-var buildingsDesc = ["Apparently only makes " + buildingsGain[0] * EPSModifier + " eggs per second.",
-	"Gives ya " + buildingsGain[1] * EPSModifier + " eggs per second. It isn't really shiny. It's painted.",
-	"'Converts' " + buildingsGain[2] * EPSModifier + " brains into eggs per second ( ͡° ͜ʖ ͡°)",
-	"Explorers digging out " + buildingsGain[3] * EPSModifier + " eggs per second.",
-	"30-Bidoof big terrorist organisation trapping " + buildingsGain[4] * EPSModifier + " people in eggs per second.",
-	"Evolution line with minibrains in their teeth allowing to make " + buildingsGain[5] * EPSModifier + " eggs per second.",
-	"Have giant muscles and play Tetris. Their secret to make " + buildingsGain[6] * EPSModifier + " EPS is vodka.",
-	"It wasn't so easy to cool them down to -1K, but since they make " + buildingsGain[7] * EPSModifier + " EpS, it's worth it!"];
+var buildingsDesc = [];
+function updateBuildingsDesc() {
+	buildingsDesc=[];
+	buildingsDesc.push("Apparently only makes " + Math.round(buildingsGain[0] * EPSModifier*100)/100 + " eggs per second.",
+			"Gives ya " + Math.round(buildingsGain[1] * EPSModifier*100)/100 + " eggs per second. It isn't really shiny. It's painted.",
+			"'Converts' " + Math.round(buildingsGain[2] * EPSModifier*100)/100 + " brains into eggs per second ( ͡° ͜ʖ ͡°)",
+			"Explorers digging out " + Math.round(buildingsGain[3] * EPSModifier*100)/100 + " eggs per second.",
+			"30-Bidoof big terrorist organisation trapping " + Math.round(buildingsGain[4] * EPSModifier*100)/100 + " people in eggs per second.",
+			"Evolution line with minibrains in their teeth allowing to make " + Math.round(buildingsGain[5] * EPSModifier*100)/100 + " eggs per second.",
+			"Have giant muscles and play Tetris. Their secret to make " + Math.round(buildingsGain[6] * EPSModifier*100)/100 + " EPS is vodka.",
+			"It wasn't so easy to cool them down to -1K, but since they make " + Math.round(buildingsGain[7] * EPSModifier*100)/100 + " EpS, it's worth it!")
+}
 function buy(order) {
 	if(eggs >= buildingsPrice[order]) {
 		buildingsAmount[order] += 1;
