@@ -178,7 +178,7 @@ function getCookie() {
 		}
 
 		for (var l=0; l<totalAchievements; l++) {
-			eggchivmentsUnlocked[l]=arrayofvalues[arrayofachievements+l];
+			eggchivmentsUnlocked[l]=parseInt(arrayofvalues[arrayofachievements+l]);
 		}
 		for (i=0; i<totalDojos; i++) {
 			dojoAmount[i] = parseInt(arrayofvalues[arrayofdojos + i]);
@@ -200,11 +200,8 @@ function getCookie() {
 				break;
 			}
 		}
-
-		for (i=0; i<totalAchievements; i++) {
-			if (eggchivmentalTypes(i)>=eggchivmentsValues[i] && eggchivmentsUnlocked[i]==0) {eggchivmentsUnlocked[i] = 1;}
-		}
 	}
+	achievementChecker();
 	toggleEggs();
 	updateEggs();
 	updateEPS();
@@ -803,7 +800,9 @@ function achievementChecker() {
 function unlockAchievement(number, text) {
 	printPopup("Achievement unlocked! "+text);
 	eggchivmentsUnlocked[number] = 1;
-	console.log(totalEggs + " " + eggchivmentsUnlocked[0] + " " + isPopupOn);
+	if (loaded==1) {
+		console.log(totalEggs + " " + eggchivmentsUnlocked[0] + " " + isPopupOn);
+	}
 	updateEPS();
 	loadAchives();
 }
