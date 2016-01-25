@@ -23,6 +23,7 @@ var level = 1;
 var loveMessageFlag = 0;
 var x;
 var expPointGain = 1;
+var expVariable = 0;
 
 //BigClick
 function updateEPS() {
@@ -136,6 +137,7 @@ function addCookie(cname, cvalue, exdays) {
 }
 	
 function getCookie() {
+	document.cookie = 'savefile=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 	var loadedsave = document.cookie;
 	var s=loadedsave.length;
 	console.log(loadedsave);
@@ -205,7 +207,7 @@ function getCookie() {
 	toggleEggs();
 	updateEggs();
 	updateEPS();
-	printPopup("Welcome to Bidoof Clicker, 2013-2016 Szymbar");
+	printPopup("Welcome to Bidoof Clicker, 2015, 2016 Szymbar");
 	loaded=1;
 }
 window.onload = getCookie;
@@ -249,7 +251,7 @@ function bidoofClick(e){
 	document.getElementById("clickingEggs").style.left=xcoord+5+"px";
 	document.getElementById("clickingEggs").visibility = "visible";
 	document.getElementById("clickingEggs").style.opacity = "0.4";
-	expPoints+= expPointGain;
+	expPoints+= expPointGain + expVariable * currentExpGain;
     console.log(expPoints);
     updateEggs();
     updateExp();
@@ -471,10 +473,10 @@ var upgradeValue = [
 	0.8, 0.5, 1.4, 0.15,
 	1.35, 2.2, 1.3, 2.8,
 	0.66, 2.5, 1.25, 10.0,
-	0.5, 10, 1.25, 0.3,
+	0.5, 10, 1.25, 0.03,
 	2, 23.5, 1.22, 0.66,
-	0.6, 0.06, 1.21, 1.9,
-	1.8, 1.5, 2.1, 5000,
+	0.06, 0.06, 1.21, 1.9,
+	1.8, 1.2, 2.1, 5000,
 	3
 ];
 var upgradeDesc = [/*"clicking Bidoofs gives 0.8 more eggs", "love drops 2 times slower", "Mama Bidoofs make 1.4x eggs now", "random events happen 1,5 times more often", "all Factories make 5% more eggs",
@@ -514,7 +516,7 @@ function upgradeTypeThings (number) {
 	else if (upgradeType[number]==4) {expPointGain += upgradeValue[number];}
 	else if (upgradeType[number]==5) {buildingsGain[upgradeSubType[number]] = buildingsGain[upgradeSubType[number]] * upgradeValue[number];}
 	else if (upgradeType[number]==6) {dojoGain[upgradeSubType[number]] = dojoGain[upgradeSubType[number]] * upgradeValue[number];}
-	else if (upgradeType[number]==7) {expPointGain += currentExpGain * upgradeValue[number];}
+	else if (upgradeType[number]==7) {expVariable += upgradeValue[number];}
 	upgradeCount++;
 	updateEggs();
 	updateEPS();
