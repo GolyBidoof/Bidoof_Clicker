@@ -1156,7 +1156,10 @@ function drawPlayerActors(imageIndex) {
 	} else if (killTracker[battleID]>=2) {
 		inBattleTextID = 2;
 	}
+	document.getElementById('sfx').load();
     drawBidoof();
+	document.getElementById('battleCry').src = "sfx/" + imageIndex + ".wav";
+	document.getElementById('battleCry').play();
 }
 
 function drawBidoof() {
@@ -1546,7 +1549,7 @@ var timer = setTimeout(function() {
 		if (textOn==1) {
 			attackText();
 		}
-		window.onkeydown = function() {
+		window.onkeyup = function() {
 			if (defeatedFlag==0) {
 				spriteAttack = 1;
 				if (textOn==0) {
@@ -1558,7 +1561,9 @@ var timer = setTimeout(function() {
 				textY[0].push(50 + Math.random()*140);
 				textAlpha[0].push(0.5);
 				enemyCurrentHP -= bidoofDamage;
+				document.getElementById('sfx').play();
 			}
+
 		}
 		if (defeatedFlag==1 && textX[0].length==0 && resultFlag==2) {
 			fallVal[0]+=50;
